@@ -8,6 +8,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 //mark class as an Entity 
@@ -31,6 +32,10 @@ private String lastName;
 //defining middle_init as column name
 @Column(name="middle_init", length=1)
 private String middleInit;
+@ManyToOne
+protected Address address;
+@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+protected Collection<Phone> phones;
 
 public int getId() 
 {
@@ -64,19 +69,17 @@ public void setMiddleInit(String middleInit)
 {
 this.middleInit = middleInit;
 }
-/**
- * @return the addresses
- */
-public Collection<Address> getAddresses() {
-	return addresses;
+public Address getAddress() {
+	return address;
 }
-/**
- * @param addresses the addresses to set
- */
-public void setAddresses(Collection<Address> addresses) {
-	this.addresses = addresses;
+public void setAddress(Address address) {
+	this.address = address;
 }
-@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-protected Collection<Address> addresses;
+public Collection<Phone> getPhones() {
+	return phones;
+}
+public void setPhones(Collection<Phone> phones) {
+	this.phones = phones;
+}
 
 }

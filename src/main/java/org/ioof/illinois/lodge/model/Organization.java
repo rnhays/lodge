@@ -8,6 +8,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 //mark class as an Entity 
@@ -21,6 +22,17 @@ public class Organization {
 	@Column(name="ORG_ID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	//defining name as column name
+	@Column(name="NAME", nullable=false, length=200)
+	private String name;
+	
+	@ManyToOne
+	protected Address address;
+	
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	protected Collection<Phone> phones;
+
+	
 	/**
 	 * @return the id
 	 */
@@ -45,22 +57,17 @@ public class Organization {
 	public void setName(String name) {
 		this.name = name;
 	}
-	//defining name as column name
-	@Column(name="NAME", nullable=false, length=200)
-	private String name;
-	
-	/**
-	 * @return the addresses
-	 */
-	public Collection<Address> getAddresses() {
-		return addresses;
+	public Address getAddress() {
+		return address;
 	}
-	/**
-	 * @param addresses the addresses to set
-	 */
-	public void setAddresses(Collection<Address> addresses) {
-		this.addresses = addresses;
+	public void setAddress(Address address) {
+		this.address = address;
 	}
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	protected Collection<Address> addresses;
+	public Collection<Phone> getPhones() {
+		return phones;
+	}
+	public void setPhones(Collection<Phone> phones) {
+		this.phones = phones;
+	}
+    
 }
